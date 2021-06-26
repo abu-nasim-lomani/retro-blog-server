@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const PostModel = require('./models/Posts')
+const PostModel = require('./models/Posts');
+require('dotenv').config()
 
-mongoose.connect("mongodb+srv://admin:abunasimlomani@cluster0.qijdl.mongodb.net/retroBlogDB?retryWrites=true&w=majority",
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qijdl.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
 )
 
@@ -42,6 +43,6 @@ app.delete('/delete/:id', async (req, res) => {
     res.send("Item Deleted")
 })
 
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
     console.log("connected")
 })
